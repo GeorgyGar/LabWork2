@@ -33,7 +33,7 @@ public:
   bool operator==(const TVector &v) const;  // сравнение
   bool operator!=(const TVector &v) const;  // сравнение
   TVector& operator=(const TVector &v);     // присваивание
-
+  
   // скалярные операции
   TVector  operator+(const ValType &val);   // прибавить скаляр
   TVector  operator-(const ValType &val);   // вычесть скаляр
@@ -206,6 +206,7 @@ template <class ValType>
 class TMatrix : public TVector<TVector<ValType> >
 {
 public:
+  int det = 1;
   TMatrix(int s = 10);                           
   TMatrix(const TMatrix &mt);                    // копирование
   TMatrix(const TVector<TVector<ValType> > &mt); // преобразование типа
@@ -214,6 +215,7 @@ public:
   TMatrix& operator= (const TMatrix &mt);        // присваивание
   TMatrix  operator+ (const TMatrix &mt);        // сложение
   TMatrix  operator- (const TMatrix &mt);        // вычитание
+  int operator[] (const TMatrix& mt);             // определитель
 
   // ввод / вывод
   friend istream& operator>>(istream &in, TMatrix &mt)
@@ -285,6 +287,19 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
         pVector[i] = mt.pVector[i];
     return *this;
 } /*-------------------------------------------------------------------------*/
+
+template <class ValType> // определитель
+int <ValType>::operator[](const TMatrix<ValType> &mt)
+{
+    for (i=0;i<Size;i++)
+    {
+        for (j=i;j<Size;j++)
+        {
+            det *= pVector[i]
+        }
+    }
+    return det;
+}
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
